@@ -57,6 +57,7 @@ class Prom extends JFrame {
 
         private JTextField firstName;
         private JTextField lastName;
+        private JTextField studentNum;
 
         TicketingSystem () {
             // Create panel
@@ -80,8 +81,14 @@ class Prom extends JFrame {
 
             this.add(fieldsPanel);
 
+            JLabel studentNumLabel = new JLabel("Student Number: ");
 
+            studentNum = new JTextField();
+            studentNum.setPreferredSize(new Dimension(200, 20));
+            fieldsPanel.add(studentNumLabel);
+            fieldsPanel.add(studentNum);
 
+            this.add(fieldsPanel);
 
             button = new JButton("OK");
             button.addActionListener(new MyButtonListener());
