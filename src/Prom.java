@@ -1,14 +1,18 @@
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Prom extends JFrame {
 
-    private TicketingSystem menuPanel;
+    private TicketingSystem ticketingPanel;
+    //private FloorPlanSystem floorPlanPanel;    not our's
+    private ArrayList<Student> students;
+    private ArrayList<Table> tables;         // not our's, but I still made one
 
     Prom() {
         super("Prom Sign Up");
 
-        menuPanel = new TicketingSystem();
-        this.add(menuPanel);
+        ticketingPanel = new TicketingSystem();
+        this.add(ticketingPanel);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -18,7 +22,7 @@ public class Prom extends JFrame {
     }
 
     void redraw() {
-        menuPanel.repaint();
+        ticketingPanel.repaint();
     }
 
 }

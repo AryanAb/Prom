@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class TicketingSystem extends JPanel {
 
@@ -16,16 +17,19 @@ public class TicketingSystem extends JPanel {
     private JButton submit;
     private JButton clear;
     private JButton cancel;
+    private JButton addPartner;
 
     // text fields
     private JTextField firstNameField;
     private JTextField lastNameField;
     private JTextField studentNumField;
+    private ArrayList<JTextField> partnerFields;
 
     // labels
     private JLabel firstNameLabel;
     private JLabel lastNameLabel;
     private JLabel studentNumLabel;
+    private ArrayList<JLabel> partnerLabels;
 
     TicketingSystem() {
 
@@ -53,6 +57,27 @@ public class TicketingSystem extends JPanel {
         studentNumLabel = new JLabel("Student Number:");
         studentNumField = new JTextField();
         studentNumField.setPreferredSize(new Dimension(300, 25));
+
+        addPartner = new JButton("Add Partner");
+        addPartner.addActionListener(new ButtonListener());
+
+        // at least one partner
+        partnerFields = new ArrayList<>();
+        partnerLabels = new ArrayList<>();
+
+        partnerFields.add(new JTextField());
+        partnerLabels.add(new JLabel("Partner 1"));
+
+        for (int i = 0; i < partnerFields.size(); i++) {
+            partnerFields.get(i).setPreferredSize(new Dimension(300, 25));
+            column.add(partnerLabels.get(i));
+            column.add(partnerFields.get(i));
+
+            if (i == partnerFields.size() - 1) {
+                column.add(addPartner);
+            }
+
+        }
 
         submit = new JButton("Submit");
         submit.addActionListener(new ButtonListener());
@@ -93,6 +118,25 @@ public class TicketingSystem extends JPanel {
         studentNumField.setText("");
     }
 
+    void partnerAdded() {
+        partnerFields.add(new JTextField());
+        partnerLabels.add(new JLabel("Partner" + (partnerLabels.size() + 1)));
+
+        for (int i = 0; i < partnerFields.size(); i++) {
+            partnerFields.get(i).setPreferredSize(new Dimension(300, 25));
+            column.add(partnerLabels.get(i));
+            column.add(partnerFields.get(i));
+
+            if (i == partnerFields.size() - 1) {
+                column.add(addPartner);
+            }
+
+        }
+
+        column.revalidate();
+        column.repaint();
+    }
+
     private class ButtonListener implements ActionListener {
 
         @Override
@@ -101,6 +145,11 @@ public class TicketingSystem extends JPanel {
                 System.out.println("submitted");
             } else if (e.getSource() == clear) {
                 clear();
+            } else if (e.getSource() == cancel) {
+                System.exit(0); //TODO: Replace this later on with .dispose()
+            } else if (e.getSource() == addPartner) {
+                partnerAdded();
+
             }
         }
 
