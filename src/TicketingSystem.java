@@ -6,30 +6,41 @@ import java.util.ArrayList;
 
 public class TicketingSystem extends JPanel {
 
+    final int MAX_PARTNER = 3;
+
     //layout
     private JPanel column;
     private JPanel fields;
     private JPanel buttonRow;
+    private JPanel partnerBtnRow;
 
     private GroupLayout layout;
+
+    GroupLayout.SequentialGroup hGroup;
+    GroupLayout.SequentialGroup vGroup;
+    GroupLayout.ParallelGroup pGroupLabel;
+    GroupLayout.ParallelGroup pGroupField;
 
     // buttons
     private JButton submit;
     private JButton clear;
     private JButton cancel;
     private JButton addPartner;
+    private JButton removePartner;
 
     // text fields
     private JTextField firstNameField;
     private JTextField lastNameField;
     private JTextField studentNumField;
     private ArrayList<JTextField> partnerFields;
+    private ArrayList<JTextField> partnerNums;
 
     // labels
     private JLabel firstNameLabel;
     private JLabel lastNameLabel;
     private JLabel studentNumLabel;
     private ArrayList<JLabel> partnerLabels;
+    private ArrayList<JLabel> partnerNumLabels;
 
     TicketingSystem() {
 
@@ -38,6 +49,7 @@ public class TicketingSystem extends JPanel {
         fields.setLayout(layout);
 
         buttonRow = new JPanel();
+        partnerBtnRow = new JPanel();
 
         column = new JPanel();
         column.setLayout(new BoxLayout(column, BoxLayout.PAGE_AXIS));
@@ -54,30 +66,31 @@ public class TicketingSystem extends JPanel {
         lastNameField = new JTextField();
         lastNameField.setPreferredSize(new Dimension(300, 25));
 
-        studentNumLabel = new JLabel("Student Number:");
+        studentNumLabel = new JLabel("Student Num:");
         studentNumField = new JTextField();
         studentNumField.setPreferredSize(new Dimension(300, 25));
-
-        addPartner = new JButton("Add Partner");
-        addPartner.addActionListener(new ButtonListener());
 
         // at least one partner
         partnerFields = new ArrayList<>();
         partnerLabels = new ArrayList<>();
+        partnerNums = new ArrayList<>();
+        partnerNumLabels = new ArrayList<>();
 
         partnerFields.add(new JTextField());
-        partnerLabels.add(new JLabel("Partner 1"));
+        partnerFields.get(0).setPreferredSize(new Dimension(300, 25));
+        partnerLabels.add(new JLabel("Partner 1 Name:"));
 
-        for (int i = 0; i < partnerFields.size(); i++) {
-            partnerFields.get(i).setPreferredSize(new Dimension(300, 25));
-            column.add(partnerLabels.get(i));
-            column.add(partnerFields.get(i));
+        partnerNums.add(new JTextField());
+        partnerNums.get(0).setPreferredSize(new Dimension(300, 25));
+        partnerNumLabels.add(new JLabel("Partner 1 Num:"));
 
-            if (i == partnerFields.size() - 1) {
-                column.add(addPartner);
-            }
+        addPartner = new JButton("Add Partner");
+        addPartner.addActionListener(new ButtonListener());
+        partnerBtnRow.add(addPartner);
 
-        }
+        removePartner = new JButton("Remove Partner");
+        removePartner.addActionListener(new ButtonListener());
+        partnerBtnRow.add(removePartner);
 
         submit = new JButton("Submit");
         submit.addActionListener(new ButtonListener());
@@ -91,21 +104,26 @@ public class TicketingSystem extends JPanel {
         cancel.addActionListener(new ButtonListener());
         buttonRow.add(cancel);
 
-        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-        hGroup.addGroup(layout.createParallelGroup().addComponent(firstNameLabel).addComponent(lastNameLabel).addComponent(studentNumLabel));
-        hGroup.addGroup(layout.createParallelGroup().addComponent(firstNameField).addComponent(lastNameField).addComponent(studentNumField));
+        pGroupLabel = layout.createParallelGroup();
+        pGroupField = layout.createParallelGroup();
+
+        hGroup = layout.createSequentialGroup();
+        hGroup.addGroup(pGroupLabel.addComponent(firstNameLabel).addComponent(lastNameLabel).addComponent(studentNumLabel).addComponent(partnerLabels.get(0)).addComponent(partnerNumLabels.get(0)));
+        hGroup.addGroup(pGroupField.addComponent(firstNameField).addComponent(lastNameField).addComponent(studentNumField).addComponent(partnerFields.get(0)).addComponent(partnerNums.get(0)));
 
         layout.setHorizontalGroup(hGroup);
 
-        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+        vGroup = layout.createSequentialGroup();
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(firstNameLabel).addComponent(firstNameField));
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(lastNameLabel).addComponent(lastNameField));
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(studentNumLabel).addComponent(studentNumField));
+        vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(partnerLabels.get(0)).addComponent(partnerFields.get(0)));
+        vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(partnerNumLabels.get(0)).addComponent(partnerNums.get(0)));
 
         layout.setVerticalGroup(vGroup);
 
-
         column.add(fields);
+        column.add(partnerBtnRow);
         column.add(buttonRow);
 
         this.add(column);
@@ -116,25 +134,64 @@ public class TicketingSystem extends JPanel {
         firstNameField.setText("");
         lastNameField.setText("");
         studentNumField.setText("");
+
+        for (int i = 0; i < partnerFields.size(); i++) {
+            partnerFields.get(i).setText("");
+            partnerNums.get(i).setText("");
+        }
+
     }
 
     void partnerAdded() {
-        partnerFields.add(new JTextField());
-        partnerLabels.add(new JLabel("Partner" + (partnerLabels.size() + 1)));
+        JTextField partner = new JTextField();
+        partner.setPreferredSize(new Dimension(300, 25));
+        partnerFields.add(partner);
 
-        for (int i = 0; i < partnerFields.size(); i++) {
-            partnerFields.get(i).setPreferredSize(new Dimension(300, 25));
-            column.add(partnerLabels.get(i));
-            column.add(partnerFields.get(i));
+        JTextField num = new JTextField();
+        num.setPreferredSize(new Dimension(300, 25));
+        partnerNums.add(num);
 
-            if (i == partnerFields.size() - 1) {
-                column.add(addPartner);
-            }
+        //partnerLabels.add(new JLabel("Partner " + (partnerLabels.size() + 1) + ": "));
+        JLabel label = new JLabel("Partner " + (partnerLabels.size() + 1) + " Name: ");
+        partnerLabels.add(label);
 
-        }
+        JLabel labelNum = new JLabel("Partner " + (partnerNumLabels.size() + 1) + " Num: ");
+        partnerNumLabels.add(labelNum);
+
+        pGroupLabel.addComponent(label);
+        pGroupField.addComponent(partner);
+        pGroupLabel.addComponent(labelNum);
+        pGroupField.addComponent(num);
+
+        /*for (int i = 0; i < partnerFields.size(); i++) {
+            pGroupLabel.addComponent(partnerLabels.get(i));
+            pGroupField.addComponent(partnerFields.get(i));
+        }*/
+
+       /*for (int i = 0; i < partnerFields.size(); i++) {
+            vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(partnerLabels.get(i)).addComponent(partnerFields.get(i)));
+        }*/
+
+        vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(partnerLabels.get(partnerLabels.size() - 1)).addComponent(partnerFields.get(partnerFields.size() - 1)));
+        vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(partnerNumLabels.get(partnerNumLabels.size() - 1)).addComponent(partnerNums.get(partnerNums.size() - 1)));
 
         column.revalidate();
         column.repaint();
+
+    }
+
+    void partnerRemoved() { //TODO this is broken, fix it
+
+
+
+        partnerLabels.remove(partnerLabels.size() - 1);
+        partnerFields.remove(partnerFields.size() - 1);
+        partnerNums.remove(partnerNums.size() - 1);
+        partnerNumLabels.remove(partnerNumLabels.size() - 1);
+
+        column.revalidate();
+        column.repaint();
+
     }
 
     private class ButtonListener implements ActionListener {
@@ -148,8 +205,11 @@ public class TicketingSystem extends JPanel {
             } else if (e.getSource() == cancel) {
                 System.exit(0); //TODO: Replace this later on with .dispose()
             } else if (e.getSource() == addPartner) {
-                partnerAdded();
-
+                if (partnerFields.size() < MAX_PARTNER) {
+                    partnerAdded();
+                }
+            } else if (e.getSource() == removePartner) {
+                partnerRemoved();
             }
         }
 
