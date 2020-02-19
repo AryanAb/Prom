@@ -1,3 +1,5 @@
+//TODO: Filter student number so only numbers can be inputted, Make sure every field is entered before submitting
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -194,12 +196,38 @@ public class TicketingSystem extends JPanel {
 
     }
 
+    void submit() {
+        Student user = new Student(firstNameField.getText() + lastNameField.getText(), studentNumField.getText(), createPartnersList());
+        System.out.println(user);
+    }
+
+    ArrayList<Student> createPartnersList() {
+
+        ArrayList<Student> partners = new ArrayList<>();
+
+        for (int i = 0; i < partnerFields.size(); i++) {
+            Student partner = new Student(partnerFields.get(i).getText(), partnerNums.get(i).getText());
+            partners.add(partner);
+        }
+
+        return partners;
+
+    }
+
+    void addStudent() {
+
+    }
+
+    void removeStudent() {
+        // in case if you want to remove any students
+    }
+
     private class ButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == submit) {
-                System.out.println("submitted");
+                submit();
             } else if (e.getSource() == clear) {
                 clear();
             } else if (e.getSource() == cancel) {
