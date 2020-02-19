@@ -1,15 +1,19 @@
 //TODO: Filter student number so only numbers can be inputted, Make sure every field is entered before submitting
 
+import org.w3c.dom.Text;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class TicketingSystem extends JPanel {
-
+    //Max number of partners
     final int MAX_PARTNER = 3;
 
+    //------------------------------------------------------------ DONT MODIFY OR ADD ANY PROPERTIES HERE. WASTE OF TIME
     //layout
     private JPanel column;
     private JPanel fields;
@@ -18,10 +22,12 @@ public class TicketingSystem extends JPanel {
 
     private GroupLayout layout;
 
+    //Formatting Group Layout
     GroupLayout.SequentialGroup hGroup;
     GroupLayout.SequentialGroup vGroup;
     GroupLayout.ParallelGroup pGroupLabel;
     GroupLayout.ParallelGroup pGroupField;
+    //-------------------------------------------------
 
     // buttons
     private JButton submit;
@@ -43,6 +49,8 @@ public class TicketingSystem extends JPanel {
     private JLabel studentNumLabel;
     private ArrayList<JLabel> partnerLabels;
     private ArrayList<JLabel> partnerNumLabels;
+
+    //Input isValid
 
     TicketingSystem() {
 
@@ -71,6 +79,7 @@ public class TicketingSystem extends JPanel {
         studentNumLabel = new JLabel("Student Num:");
         studentNumField = new JTextField();
         studentNumField.setPreferredSize(new Dimension(300, 25));
+
 
         // at least one partner
         partnerFields = new ArrayList<>();
@@ -184,8 +193,6 @@ public class TicketingSystem extends JPanel {
 
     void partnerRemoved() { //TODO this is broken, fix it
 
-
-
         partnerLabels.remove(partnerLabels.size() - 1);
         partnerFields.remove(partnerFields.size() - 1);
         partnerNums.remove(partnerNums.size() - 1);
@@ -196,9 +203,30 @@ public class TicketingSystem extends JPanel {
 
     }
 
-    void submit() {
-        Student user = new Student(firstNameField.getText() + lastNameField.getText(), studentNumField.getText(), createPartnersList());
-        System.out.println(user);
+    boolean isParseable(JTextField number) {
+        try{
+            Integer.parseInt(number.getText());
+            return true;
+        } catch(NumberFormatException e) {
+            return false;
+        }
+    }
+
+    void submitted() {
+        boolean studentNumIsOk = true;
+
+        if (!isParseable(studentNumField)) {
+            System.out.println("Student Number not appropriate input. Please input it properly.");
+            studentNumIsOk = false;
+        }
+        for (int i = 0; i < partnerNums.size(); i++) {
+            if(!isParseable((partnerNums.get(i)))) {
+                System.out.println("Partner Number " + i+1 + " is not acceptable boii. Please input properly");
+            }
+        }
+        if(!studentNumIsOk) {
+            Student user = new Student(firstNameField.getText() + lastNameField.getText(), studentNumField.getText(), createPartnersList());
+        }
     }
 
     ArrayList<Student> createPartnersList() {
@@ -227,7 +255,7 @@ public class TicketingSystem extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == submit) {
-                submit();
+                submitted();
             } else if (e.getSource() == clear) {
                 clear();
             } else if (e.getSource() == cancel) {
@@ -240,8 +268,5 @@ public class TicketingSystem extends JPanel {
                 partnerRemoved();
             }
         }
-
     }
-
-
 }

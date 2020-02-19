@@ -9,7 +9,7 @@ public class Prom extends JFrame {
     private ArrayList<Table> tables;         // not our's, but I still made one
 
     Prom() {
-        super("Prom Sign Up");
+        super("PROM 2021 SIGN UP");
 
         ticketingPanel = new TicketingSystem();
         this.add(ticketingPanel);
