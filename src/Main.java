@@ -10,8 +10,14 @@ public class Main {
             //Logic
 
             //updates and redraws panel
-            f.redraw();
+            if (f.getVisibility()) {
+                f.redraw();
+            } else {
+                inPlay = false;
+            }
         }
+        f.dispose();
+        System.out.println("The Window has been closed!!!!");
     }
 
 }

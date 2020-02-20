@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class Prom extends JFrame {
 
     private TicketingSystem ticketingPanel;
+    private boolean isVisible = true;
     //private FloorPlanSystem floorPlanPanel;    not our's
     private ArrayList<Student> students;
     private ArrayList<Table> tables;         // not our's, but I still made one
@@ -18,11 +19,18 @@ public class Prom extends JFrame {
 
         this.setSize(600, 400);
 
-        this.setVisible(true);
+        this.setVisible(isVisible);
     }
 
     void redraw() {
         ticketingPanel.repaint();
+        //User presses Cancel
     }
 
+    void notVisible() {
+        isVisible = false;
+    }
+    boolean getVisibility() {
+        return ticketingPanel.isVisible;
+    }
 }

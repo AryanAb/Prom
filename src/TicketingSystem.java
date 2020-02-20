@@ -1,4 +1,4 @@
-//TODO: Filter student number so only numbers can be inputted, Make sure every field is entered before submitting
+//TODO Make sure every field is entered before submitting
 
 import org.w3c.dom.Text;
 
@@ -111,7 +111,7 @@ public class TicketingSystem extends JPanel {
         clear.addActionListener(new ButtonListener());
         buttonRow.add(clear);
 
-        cancel = new JButton("Cancel");
+        cancel = new JButton("Cancel & Exit");
         cancel.addActionListener(new ButtonListener());
         buttonRow.add(cancel);
 
@@ -242,13 +242,12 @@ public class TicketingSystem extends JPanel {
 
     }
 
-    void addStudent() {
+    void addStudent() {}
 
-    }
+    void removeStudent() {}
 
-    void removeStudent() {
-        // in case if you want to remove any students
-    }
+
+    boolean isVisible = true;
 
     private class ButtonListener implements ActionListener {
 
@@ -259,7 +258,7 @@ public class TicketingSystem extends JPanel {
             } else if (e.getSource() == clear) {
                 clear();
             } else if (e.getSource() == cancel) {
-                System.exit(0); //TODO: Replace this later on with .dispose()
+                isVisible = false;
             } else if (e.getSource() == addPartner) {
                 if (partnerFields.size() < MAX_PARTNER) {
                     partnerAdded();
