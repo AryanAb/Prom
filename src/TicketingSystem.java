@@ -254,7 +254,7 @@ public class TicketingSystem extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == submit) {
-                submitted();
+                submitted(); //TODO: File should only be submitted iff all fields are filled out
             } else if (e.getSource() == clear) {
                 clear();
             } else if (e.getSource() == cancel) {
