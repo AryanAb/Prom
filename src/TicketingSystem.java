@@ -1,11 +1,10 @@
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+//TODO: FIX LAYOUTS AND ADD IMAGES/GIFS TO LIVEN THINGS UP
 public class TicketingSystem extends JPanel {
     //Max number of partners
     final int MAX_PARTNER = 3;
@@ -80,7 +79,6 @@ public class TicketingSystem extends JPanel {
         studentNumLabel = new JLabel("Student Num:");
         studentNumField = new JTextField();
         studentNumField.setPreferredSize(new Dimension(300, 25));
-
 
         // at least one partner
         partnerFields = new ArrayList<>();
@@ -234,21 +232,25 @@ public class TicketingSystem extends JPanel {
         return true;
     }
 
-    void submitted() {
-        boolean studentNumIsOk = true;
+     boolean submitted() {
+        boolean NumIsOk = true;
 
         if (!isParseable(studentNumField)) {
             System.out.println("Student Number not appropriate. Please input properly.");
-            studentNumIsOk = false;
+            NumIsOk = false;
+//            return false;
         }
         for (int i = 0; i < partnerNums.size(); i++) {
             if(!isParseable((partnerNums.get(i)))) {
                 System.out.println("Partner Number " + (i+1) + " is not acceptable. Please input properly");
+                return false;
             }
         }
-        if(!studentNumIsOk) {
+        if(!NumIsOk) {
             Student user = new Student(firstNameField.getText() + lastNameField.getText(), studentNumField.getText(), createPartnersList());
+            return true;
         }
+       return false;
     }
 
     ArrayList<Student> createPartnersList() {
@@ -268,7 +270,6 @@ public class TicketingSystem extends JPanel {
 
     void removeStudent() {}
 
-
     boolean isVisible = true;
 
     private class ButtonListener implements ActionListener {
@@ -276,20 +277,22 @@ public class TicketingSystem extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == submit) {
-                if (areFieldsFilled()) {
-                    submitted();
+                if (areFieldsFilled() && submitted()) {
                     System.out.println("The document was submitted");
                     isVisible = false;
-                } else {
+                } else if (!areFieldsFilled()){
                     System.out.println("All fields are not filled");
                 }
             } else if (e.getSource() == clear) {
                 clear();
             } else if (e.getSource() == cancel) {
+                System.out.println("Exiting in 1 second...");
                 isVisible = false;
             } else if (e.getSource() == addPartner) {
                 if (partnerFields.size() < MAX_PARTNER) {
                     partnerAdded();
+                } else {
+                    System.out.println("Unable to add more partners");
                 }
             } else if (e.getSource() == removePartner) {
                 partnerRemoved();

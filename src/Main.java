@@ -9,8 +9,6 @@ public class Main {
         boolean inPlay = true;
         while (inPlay) {
 
-            //Logic
-
             //updates and redraws panel
             if (f.getVisibility()) {
                 f.redraw();
@@ -18,9 +16,8 @@ public class Main {
                 inPlay = false;
             }
         }
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(1);
         f.dispose();
-        System.out.println("The Window has been closed!!!!");
     }
 
 }

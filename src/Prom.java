@@ -12,22 +12,23 @@ public class Prom extends JFrame {
 
     Prom() {
         super("PROM 2021 SIGN UP");
-
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        Font font = new Font("Crystal",Font.BOLD,12); //TODO: CHANGE THE FONTS
+        this.setFont(font);
         ticketingPanel = new TicketingSystem();
         this.add(ticketingPanel);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        this.setSize(600, 400);
+        //Open in center of screen
+        this.setSize(((int)screen.getWidth())/2, ((int)screen.getHeight()) * 2/3);
+        this.setLocationRelativeTo(null);
 
         this.setVisible(isVisible);
-        ticketingPanel.setBackground(Color.RED);
+        ticketingPanel.setBackground(Color.GREEN);
     }
 
-    void redraw() {
-        ticketingPanel.repaint();
-        //User presses Cancel
-    }
+    void redraw() { ticketingPanel.repaint(); }
 
     boolean getVisibility() {
         return ticketingPanel.isVisible;
