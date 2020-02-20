@@ -1,9 +1,11 @@
+import java.util.concurrent.TimeUnit;
+
 public class Main {
-    public static void main (String[] args) {
+    public static void main (String[] args) throws InterruptedException {
         Prom f = new Prom();
         play(f);
     }
-    static void play (Prom f) {
+    static void play (Prom f) throws InterruptedException {
         boolean inPlay = true;
         while (inPlay) {
 
@@ -16,6 +18,7 @@ public class Main {
                 inPlay = false;
             }
         }
+        TimeUnit.SECONDS.sleep(2);
         f.dispose();
         System.out.println("The Window has been closed!!!!");
     }

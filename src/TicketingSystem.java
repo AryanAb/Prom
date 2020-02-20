@@ -1,4 +1,4 @@
-//TODO Make sure every field is entered before submitting
+//TODO Make sure every field is filled before submitting
 
 import org.w3c.dom.Text;
 
@@ -211,17 +211,30 @@ public class TicketingSystem extends JPanel {
             return false;
         }
     }
+    
+    boolean areFieldsFilled() {
+        if(firstNameField.getText().equals("")) {return false;}
+        else if(lastNameField.getText().equals("")) {return false;}
+        else if(studentNumField.getText().equals("")) {return false;}
+
+        for (int i = 0; i < partnerFields.size(); i++) {
+            if(partnerFields.get(i).getText().equals("")) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     void submitted() {
         boolean studentNumIsOk = true;
 
         if (!isParseable(studentNumField)) {
-            System.out.println("Student Number not appropriate input. Please input it properly.");
+            System.out.println("Student Number not appropriate. Please input properly.");
             studentNumIsOk = false;
         }
         for (int i = 0; i < partnerNums.size(); i++) {
             if(!isParseable((partnerNums.get(i)))) {
-                System.out.println("Partner Number " + i+1 + " is not acceptable boii. Please input properly");
+                System.out.println("Partner Number " + (i+1) + " is not acceptable. Please input properly");
             }
         }
         if(!studentNumIsOk) {
@@ -254,7 +267,13 @@ public class TicketingSystem extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == submit) {
-                submitted(); //TODO: File should only be submitted iff all fields are filled out
+                if (areFieldsFilled()) {
+                    submitted();
+                    System.out.println("The document was submitted");
+                    isVisible = false;
+                } else {
+                    System.out.println("All fields are not filled");
+                }
             } else if (e.getSource() == clear) {
                 clear();
             } else if (e.getSource() == cancel) {
