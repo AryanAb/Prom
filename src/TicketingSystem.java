@@ -192,8 +192,11 @@ public class TicketingSystem extends JPanel {
 
         partnerLabels.remove(partnerLabels.size() - 1);
         partnerFields.remove(partnerFields.size() - 1);
+
         partnerNums.remove(partnerNums.size() - 1);
         partnerNumLabels.remove(partnerNumLabels.size() - 1);
+
+        partnerFields.get(partnerFields.size()-1).setVisible(false); //Setting PartnerField to false
 
         column.revalidate();
         column.repaint();
