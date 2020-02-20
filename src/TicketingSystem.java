@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 //TODO: FIX LAYOUTS AND ADD IMAGES/GIFS TO LIVEN THINGS UP
+//
 public class TicketingSystem extends JPanel {
     //Max number of partners
     final int MAX_PARTNER = 3;
