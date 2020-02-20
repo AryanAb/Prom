@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Prom extends JFrame {
@@ -20,6 +21,7 @@ public class Prom extends JFrame {
         this.setSize(600, 400);
 
         this.setVisible(isVisible);
+        ticketingPanel.setBackground(Color.RED);
     }
 
     void redraw() {
@@ -27,9 +29,6 @@ public class Prom extends JFrame {
         //User presses Cancel
     }
 
-    void notVisible() {
-        isVisible = false;
-    }
     boolean getVisibility() {
         return ticketingPanel.isVisible;
     }

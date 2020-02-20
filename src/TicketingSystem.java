@@ -62,8 +62,12 @@ public class TicketingSystem extends JPanel {
         column.setLayout(new BoxLayout(column, BoxLayout.PAGE_AXIS));
 
         layout.setAutoCreateGaps(true);
-
         layout.setAutoCreateContainerGaps(true);
+
+        fields.setBackground(Color.CYAN);
+        buttonRow.setBackground(Color.CYAN);
+        partnerBtnRow.setBackground(Color.CYAN);
+
 
         firstNameLabel = new JLabel("First Name:");
         firstNameField = new JTextField();
@@ -92,6 +96,7 @@ public class TicketingSystem extends JPanel {
         partnerNums.get(0).setPreferredSize(new Dimension(300, 25));
         partnerNumLabels.add(new JLabel("Partner 1 Num:"));
 
+        //Buttons
         addPartner = new JButton("Add Partner");
         addPartner.addActionListener(new ButtonListener());
         partnerBtnRow.add(addPartner);
@@ -112,6 +117,7 @@ public class TicketingSystem extends JPanel {
         cancel.addActionListener(new ButtonListener());
         buttonRow.add(cancel);
 
+        //Groupings
         pGroupLabel = layout.createParallelGroup();
         pGroupField = layout.createParallelGroup();
 
@@ -190,11 +196,14 @@ public class TicketingSystem extends JPanel {
 
     void partnerRemoved() { //TODO this is broken, fix it
 
+
         partnerLabels.remove(partnerLabels.size() - 1);
         partnerFields.remove(partnerFields.size() - 1);
-
         partnerNums.remove(partnerNums.size() - 1);
         partnerNumLabels.remove(partnerNumLabels.size() - 1);
+
+//        partnerFields.get(partnerFields.size()-1).setVisible(false);
+//        partnerLabels.get(partnerLabels.size()-1).setVisible(false);
 
         partnerFields.get(partnerFields.size()-1).setVisible(false); //Setting PartnerField to false
 
