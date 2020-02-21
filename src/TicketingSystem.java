@@ -234,12 +234,10 @@ public class TicketingSystem extends JPanel {
     }
 
      boolean submitted() {
-        boolean NumIsOk = true;
-
         if (!isParseable(studentNumField)) {
             System.out.println("Student Number not appropriate. Please input properly.");
-            NumIsOk = false;
-//            return false;
+
+            return false;
         }
         for (int i = 0; i < partnerNums.size(); i++) {
             if(!isParseable((partnerNums.get(i)))) {
@@ -247,11 +245,9 @@ public class TicketingSystem extends JPanel {
                 return false;
             }
         }
-        if(!NumIsOk) {
+
             Student user = new Student(firstNameField.getText() + lastNameField.getText(), studentNumField.getText(), createPartnersList());
             return true;
-        }
-       return false;
     }
 
     ArrayList<Student> createPartnersList() {
@@ -278,7 +274,9 @@ public class TicketingSystem extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == submit) {
+                System.out.println("Fields are filled");
                 if (areFieldsFilled() && submitted()) {
+
                     System.out.println("The document was submitted");
                     isVisible = false;
                 } else if (!areFieldsFilled()){
