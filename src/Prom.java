@@ -13,8 +13,9 @@ public class Prom extends JFrame {
     Prom() {
         super("PROM 2021 SIGN UP");
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        Font font = new Font("Crystal",Font.BOLD,12); //TODO: CHANGE THE FONTS
-        this.setFont(font);
+        Font font1 = new Font("Crystal",Font.BOLD,12); //TODO: CHANGE THE FONTS, Font's aren't loading up
+        //Font font2 = new Font("Verdana",Font.PLAIN,14);
+        this.setFont(font1);
         ticketingPanel = new TicketingSystem();
         this.add(ticketingPanel);
 

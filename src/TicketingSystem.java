@@ -195,20 +195,15 @@ public class TicketingSystem extends JPanel {
 
     void partnerRemoved() { //TODO this is broken, fix it
 
-
         partnerLabels.remove(partnerLabels.size() - 1);
         partnerFields.remove(partnerFields.size() - 1);
         partnerNums.remove(partnerNums.size() - 1);
         partnerNumLabels.remove(partnerNumLabels.size() - 1);
-
-//        partnerFields.get(partnerFields.size()-1).setVisible(false);
 //        partnerLabels.get(partnerLabels.size()-1).setVisible(false);
-
         partnerFields.get(partnerFields.size()-1).setVisible(false); //Setting PartnerField to false
 
         column.revalidate();
         column.repaint();
-
     }
 
     boolean isParseable(JTextField number) {
@@ -236,7 +231,6 @@ public class TicketingSystem extends JPanel {
      boolean submitted() {
         if (!isParseable(studentNumField)) {
             System.out.println("Student Number not appropriate. Please input properly.");
-
             return false;
         }
         for (int i = 0; i < partnerNums.size(); i++) {
@@ -245,22 +239,18 @@ public class TicketingSystem extends JPanel {
                 return false;
             }
         }
-
             Student user = new Student(firstNameField.getText() + lastNameField.getText(), studentNumField.getText(), createPartnersList());
             return true;
     }
 
     ArrayList<Student> createPartnersList() {
-
         ArrayList<Student> partners = new ArrayList<>();
 
         for (int i = 0; i < partnerFields.size(); i++) {
             Student partner = new Student(partnerFields.get(i).getText(), partnerNums.get(i).getText());
             partners.add(partner);
         }
-
         return partners;
-
     }
 
     void addStudent() {}
