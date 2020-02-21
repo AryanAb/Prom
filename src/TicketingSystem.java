@@ -1,7 +1,12 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 //TODO: FIX LAYOUTS AND ADD IMAGES/GIFS TO LIVEN THINGS UP
@@ -10,7 +15,6 @@ public class TicketingSystem extends JPanel {
     //Max number of partners
     final int MAX_PARTNER = 3;
 
-    //------------------------------------------------------------ DONT MODIFY OR ADD ANY PROPERTIES HERE. WASTE OF TIME
     //layout
     private JPanel column;
     private JPanel fields;
@@ -18,6 +22,8 @@ public class TicketingSystem extends JPanel {
     private JPanel partnerBtnRow;
 
     private GroupLayout layout;
+
+    private final String imgPath = "Richmond_Hill_HS_COA.jpg";
 
     //Formatting Group Layout
     GroupLayout.SequentialGroup hGroup;
@@ -51,6 +57,14 @@ public class TicketingSystem extends JPanel {
 
     TicketingSystem() {
 
+        ImageIcon icon = new ImageIcon(imgPath);
+        icon.getImage().flush();
+        JLabel background = new JLabel();
+        background.setIcon(icon);
+        background.setLayout(new BorderLayout());
+
+
+
         fields = new JPanel();
         layout = new GroupLayout(fields);
         fields.setLayout(layout);
@@ -64,9 +78,10 @@ public class TicketingSystem extends JPanel {
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
-        fields.setBackground(Color.CYAN);
+        /*fields.setBackground(Color.CYAN);
         buttonRow.setBackground(Color.CYAN);
-        partnerBtnRow.setBackground(Color.CYAN);
+        partnerBtnRow.setBackground(Color.CYAN);*/
+        column.setBorder(new TitledBorder(new LineBorder(Color.GREEN, 5), "Sign Up Form"));
 
 
         firstNameLabel = new JLabel("First Name:");
@@ -139,6 +154,8 @@ public class TicketingSystem extends JPanel {
         column.add(partnerBtnRow);
         column.add(buttonRow);
 
+
+        this.add(background);
         this.add(column);
 
     }
@@ -195,12 +212,15 @@ public class TicketingSystem extends JPanel {
 
     void partnerRemoved() { //TODO this is broken, fix it
 
+        partnerFields.get(partnerFields.size()-1).setVisible(false);
+        partnerNums.get(partnerNums.size() - 1).setVisible(false);
+        partnerLabels.get(partnerLabels.size()-1).setVisible(false);
+        partnerNumLabels.get(partnerNumLabels.size() - 1).setVisible(false);
+
         partnerLabels.remove(partnerLabels.size() - 1);
         partnerFields.remove(partnerFields.size() - 1);
         partnerNums.remove(partnerNums.size() - 1);
         partnerNumLabels.remove(partnerNumLabels.size() - 1);
-//        partnerLabels.get(partnerLabels.size()-1).setVisible(false);
-        partnerFields.get(partnerFields.size()-1).setVisible(false); //Setting PartnerField to false
 
         column.revalidate();
         column.repaint();
@@ -284,7 +304,11 @@ public class TicketingSystem extends JPanel {
                     System.out.println("Unable to add more partners");
                 }
             } else if (e.getSource() == removePartner) {
-                partnerRemoved();
+                if (partnerFields.size() > 1) {
+                    partnerRemoved();
+                } else {
+                    System.out.println("You need at least one partner!");
+                }
             }
         }
     }

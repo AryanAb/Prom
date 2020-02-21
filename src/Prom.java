@@ -19,14 +19,14 @@ public class Prom extends JFrame {
         ticketingPanel = new TicketingSystem();
         this.add(ticketingPanel);
 
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Open in center of screen
         this.setSize(((int)screen.getWidth())/2, ((int)screen.getHeight()) * 2/3);
         this.setLocationRelativeTo(null);
 
         this.setVisible(isVisible);
-        ticketingPanel.setBackground(Color.GREEN);
+        //ticketingPanel.setBackground(Color.GREEN);
     }
 
     void redraw() { ticketingPanel.repaint(); }
