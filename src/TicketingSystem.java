@@ -284,7 +284,7 @@ public class TicketingSystem extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == submit) {
-                System.out.println("Fields are filled");
+
                 if (areFieldsFilled() && submitted()) {
 
                     System.out.println("The document was submitted");
