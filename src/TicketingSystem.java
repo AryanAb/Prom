@@ -3,6 +3,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 //
 public class TicketingSystem extends JPanel {
     //Max number of partners
-    final int MAX_PARTNER = 3;
+    final int MAX_PARTNER = 4;
 
     //layout
     private JPanel column;
@@ -54,6 +55,7 @@ public class TicketingSystem extends JPanel {
     private ArrayList<JLabel> partnerNumLabels;
     private JLabel invalid;
 
+
     //Input isValid
 
     TicketingSystem() {
@@ -64,12 +66,12 @@ public class TicketingSystem extends JPanel {
         background.setIcon(icon);
         background.setLayout(new BorderLayout());
 
-
         invalid = new JLabel();
         invalid.setForeground(Color.red);
         invalid.setVisible(false);
         invalid.setHorizontalAlignment(SwingConstants.LEFT); //TODO fix the alignment on invalid
         invalid.setAlignmentX(Component.LEFT_ALIGNMENT);
+
 
         fields = new JPanel();
         layout = new GroupLayout(fields);
@@ -217,7 +219,6 @@ public class TicketingSystem extends JPanel {
     }
 
     void partnerRemoved() { //TODO this is broken, fix it
-
         partnerFields.get(partnerFields.size()-1).setVisible(false);
         partnerNums.get(partnerNums.size() - 1).setVisible(false);
         partnerLabels.get(partnerLabels.size()-1).setVisible(false);
@@ -232,15 +233,6 @@ public class TicketingSystem extends JPanel {
         column.repaint();
     }
 
-    boolean isParseable(JTextField number) {
-        try{
-            Integer.parseInt(number.getText());
-            return true;
-        } catch(NumberFormatException e) {
-            return false;
-        }
-    }
-    
     boolean areFieldsFilled() {
         if(firstNameField.getText().equals("")) {return false;}
         else if(lastNameField.getText().equals("")) {return false;}
@@ -253,6 +245,16 @@ public class TicketingSystem extends JPanel {
         }
         return true;
     }
+
+    boolean isParseable(JTextField number) {
+        try{
+            Integer.parseInt(number.getText().trim());
+            return true;
+        } catch(NumberFormatException e) {
+            return false;
+        }
+    }
+
 
      boolean submitted() {
         if (!isParseable(studentNumField)) {
@@ -291,7 +293,6 @@ public class TicketingSystem extends JPanel {
     }
 
     void addStudent() {}
-
     void removeStudent() {}
 
     boolean isVisible = true;
@@ -301,13 +302,12 @@ public class TicketingSystem extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == submit) {
-                /*if (areFieldsFilled() && submitted()) {
-
+                if (areFieldsFilled() && submitted()) {
                     System.out.println("The document was submitted");
                     isVisible = false;
                 } else if (!areFieldsFilled()){
                     System.out.println("All fields are not filled");
-                }*/
+                }
                 submit();
             } else if (e.getSource() == clear) {
                 clear();
