@@ -1,13 +1,11 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import java.awt.Color;
 import java.awt.*;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 //TODO: FIX LAYOUTS AND ADD IMAGES/GIFS TO LIVEN THINGS UP
@@ -55,7 +53,6 @@ public class TicketingSystem extends JPanel {
     private ArrayList<JLabel> partnerNumLabels;
     private JLabel invalid;
 
-
     //Input isValid
 
     TicketingSystem() {
@@ -70,7 +67,7 @@ public class TicketingSystem extends JPanel {
         invalid.setForeground(Color.red);
         invalid.setVisible(false);
         invalid.setHorizontalAlignment(SwingConstants.LEFT); //TODO fix the alignment on invalid
-        invalid.setAlignmentX(Component.LEFT_ALIGNMENT);
+        invalid.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
         fields = new JPanel();
@@ -283,14 +280,14 @@ public class TicketingSystem extends JPanel {
         return partners;
     }
 
-    void submit() {
-        if (areFieldsFilled()) {
-            System.out.println("Submitted");
-        } else {
-            invalid.setText("Error: One or more field was not filled.");
-            invalid.setVisible(true);
-        }
-    }
+//    void submit() {
+//        if (areFieldsFilled() && submitted()) {
+//            System.out.println("Submitted");
+//        } else {
+//            invalid.setText("Error: One or more field was not filled.");
+//            invalid.setVisible(true);
+//        }
+//    }
 
     void addStudent() {}
     void removeStudent() {}
@@ -307,8 +304,10 @@ public class TicketingSystem extends JPanel {
                     isVisible = false;
                 } else if (!areFieldsFilled()){
                     System.out.println("All fields are not filled");
+                    invalid.setText("Error: One or more fields are not filled");
+                    invalid.setVisible(true);
                 }
-                submit();
+//                submit();
             } else if (e.getSource() == clear) {
                 clear();
             } else if (e.getSource() == cancel) {
