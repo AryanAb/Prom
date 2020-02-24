@@ -52,6 +52,7 @@ public class TicketingSystem extends JPanel {
     private JLabel studentNumLabel;
     private ArrayList<JLabel> partnerLabels;
     private ArrayList<JLabel> partnerNumLabels;
+    private JLabel invalid;
 
     //Input isValid
 
@@ -64,6 +65,11 @@ public class TicketingSystem extends JPanel {
         background.setLayout(new BorderLayout());
 
 
+        invalid = new JLabel();
+        invalid.setForeground(Color.red);
+        invalid.setVisible(false);
+        invalid.setHorizontalAlignment(SwingConstants.LEFT); //TODO fix the alignment on invalid
+        invalid.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         fields = new JPanel();
         layout = new GroupLayout(fields);
@@ -73,7 +79,7 @@ public class TicketingSystem extends JPanel {
         partnerBtnRow = new JPanel();
 
         column = new JPanel();
-        column.setLayout(new BoxLayout(column, BoxLayout.PAGE_AXIS));
+        column.setLayout(new BoxLayout(column, BoxLayout.Y_AXIS));
 
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
@@ -153,7 +159,7 @@ public class TicketingSystem extends JPanel {
         column.add(fields);
         column.add(partnerBtnRow);
         column.add(buttonRow);
-
+        column.add(invalid);
 
         this.add(background);
         this.add(column);
@@ -250,7 +256,9 @@ public class TicketingSystem extends JPanel {
 
      boolean submitted() {
         if (!isParseable(studentNumField)) {
-            System.out.println("Student Number not appropriate. Please input properly.");
+            invalid.setText("Student Number not appropriate. Please input properly.");
+            invalid.setVisible(true);
+
             return false;
         }
         for (int i = 0; i < partnerNums.size(); i++) {
@@ -273,6 +281,15 @@ public class TicketingSystem extends JPanel {
         return partners;
     }
 
+    void submit() {
+        if (areFieldsFilled()) {
+            System.out.println("Submitted");
+        } else {
+            invalid.setText("Error: One or more field was not filled.");
+            invalid.setVisible(true);
+        }
+    }
+
     void addStudent() {}
 
     void removeStudent() {}
@@ -284,14 +301,14 @@ public class TicketingSystem extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == submit) {
-                System.out.println("Fields are filled");
-                if (areFieldsFilled() && submitted()) {
+                /*if (areFieldsFilled() && submitted()) {
 
                     System.out.println("The document was submitted");
                     isVisible = false;
                 } else if (!areFieldsFilled()){
                     System.out.println("All fields are not filled");
-                }
+                }*/
+                submit();
             } else if (e.getSource() == clear) {
                 clear();
             } else if (e.getSource() == cancel) {
