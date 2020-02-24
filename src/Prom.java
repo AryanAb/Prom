@@ -6,12 +6,15 @@ public class Prom extends JFrame {
 
     private TicketingSystem ticketingPanel;
     private boolean isVisible = true;
-    //private FloorPlanSystem floorPlanPanel;    not our's
-    private ArrayList<Student> students;
-    private ArrayList<Table> tables;         // not our's, but I still made one
+    //TODO change to private and set getters and setters
+    public static ArrayList<Student> students;
+    public static ArrayList<Table> tables;
 
     Prom() {
         super("PROM 2021 SIGN UP");
+
+        students = new ArrayList<>();
+
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         Font font1 = new Font("Crystal",Font.BOLD,12); //TODO: CHANGE THE FONTS, Font's aren't loading up
         //Font font2 = new Font("Verdana",Font.PLAIN,14);

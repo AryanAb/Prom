@@ -8,8 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-//TODO: FIX LAYOUTS AND ADD IMAGES/GIFS TO LIVEN THINGS UP
-//
+
 public class TicketingSystem extends JPanel {
     //Max number of partners
     final int MAX_PARTNER = 4;
@@ -66,7 +65,7 @@ public class TicketingSystem extends JPanel {
         invalid = new JLabel();
         invalid.setForeground(Color.red);
         invalid.setVisible(false);
-        invalid.setHorizontalAlignment(SwingConstants.LEFT); //TODO fix the alignment on invalid
+        invalid.setHorizontalAlignment(SwingConstants.LEFT);
         invalid.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
@@ -215,7 +214,7 @@ public class TicketingSystem extends JPanel {
 
     }
 
-    void partnerRemoved() { //TODO this is broken, fix it
+    void partnerRemoved() {
         partnerFields.get(partnerFields.size()-1).setVisible(false);
         partnerNums.get(partnerNums.size() - 1).setVisible(false);
         partnerLabels.get(partnerLabels.size()-1).setVisible(false);
@@ -260,13 +259,23 @@ public class TicketingSystem extends JPanel {
 
             return false;
         }
+
         for (int i = 0; i < partnerNums.size(); i++) {
             if(!isParseable((partnerNums.get(i)))) {
                 System.out.println("Partner Number " + (i+1) + " is not acceptable. Please input properly");
                 return false;
             }
         }
+
             Student user = new Student(firstNameField.getText() + lastNameField.getText(), studentNumField.getText(), createPartnersList());
+            Prom prom = new Prom();
+            prom.students.add(user);
+
+            for (int i = 0; i < partnerFields.size(); i++) {
+                Student partner = new Student(partnerFields.get(i).getText(), partnerNums.get(i).getText());
+                prom.students.add(partner);
+            }
+
             return true;
     }
 
@@ -300,7 +309,11 @@ public class TicketingSystem extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == submit) {
                 if (areFieldsFilled() && submitted()) {
-                    System.out.println("The document was submitted");
+                    //System.out.println("The document was submitted");
+                    invalid.setText("Profile submitted successfully!");
+                    invalid.setForeground(Color.GREEN);
+                    invalid.setVisible(true);
+
                     isVisible = false;
                 } else if (!areFieldsFilled()){
                     System.out.println("All fields are not filled");

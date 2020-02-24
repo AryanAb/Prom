@@ -7,7 +7,7 @@ public class Main {
     }
     static void play (Prom f) throws InterruptedException {
         boolean inPlay = true;
-        while (inPlay) {
+       while (inPlay) {
 
             //updates and redraws panel
             if (f.getVisibility()) {
