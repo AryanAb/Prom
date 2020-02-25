@@ -1,23 +1,12 @@
-import java.util.concurrent.TimeUnit;
+/*Class Name: Main
+* Version: 1.0
+* Authors: Nischay Uppal & Aryan Abed
+* Date: February 25,2018
+* Description: Initializing Prom Class
+* */
 
 public class Main {
-    public static void main (String[] args) throws InterruptedException {
+    public static void main (String[] args) {
         Prom f = new Prom();
-       // play(f);
     }
-   /* static void play (Prom f) throws InterruptedException {
-        boolean inPlay = true;
-       while (inPlay) {
-
-           //updates and redraws panel
-           if (f.getVisibility()) {
-               f.redraw();
-           } else {
-              // TimeUnit.SECONDS.sleep(1);
-               inPlay = false;
-           }
-       }
-
-    }*/
-
 }

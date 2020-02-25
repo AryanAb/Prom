@@ -1,66 +1,60 @@
-import javax.swing.*;
+/*Class Name: TicketingSystem
+ * Version: 1.0
+ * Authors: Nischay Uppal & Aryan Abed
+ * Date: February 25,2018
+ * Description: Running Core Ticketing System for user
+ * */
+
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import javax.swing.BoxLayout;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.Color;
-import java.awt.*;
-import java.awt.Font;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
+import java.util.concurrent.TimeUnit;
 
 public class TicketingSystem extends JPanel implements ActionListener {
 
-    //Max number of partners
-    final int MAX_PARTNER = 3;
+    private final int MAX_PARTNERS = 7;
+    private final String imagePath = "Richmond_Hill_HS_COA.jpg";
+    private ArrayList<Student> students;
 
     //layout
-    private JPanel column;
-    private JPanel fields;
-    private JPanel buttonRow;
-    private JPanel partnerBtnRow;
+    private JPanel column,fields,buttonRow,partnerBtnRow;
 
+    //Formatted Layout
     private GroupLayout layout;
+    GroupLayout.SequentialGroup hGroup,vGroup;
+    GroupLayout.ParallelGroup pGroupLabel,pGroupField;
 
-    private final String imgPath = "Richmond_Hill_HS_COA.jpg";
+    //Buttons
+    private JButton submit,clear,cancel,addPartner,removePartner;
 
-    //Formatting Group Layout
-    GroupLayout.SequentialGroup hGroup;
-    GroupLayout.SequentialGroup vGroup;
-    GroupLayout.ParallelGroup pGroupLabel;
-    GroupLayout.ParallelGroup pGroupField;
-    //-------------------------------------------------
+    //Text Fields
+    private JTextField firstNameField,lastNameField,studentNumField;
+    private ArrayList<JTextField> partnerFields,partnerNums;
 
-    // buttons
-    private JButton submit;
-    private JButton clear;
-    private JButton cancel;
-    private JButton addPartner;
-    private JButton removePartner;
-
-    // text fields
-    private JTextField firstNameField;
-    private JTextField lastNameField;
-    private JTextField studentNumField;
-    private ArrayList<JTextField> partnerFields;
-    private ArrayList<JTextField> partnerNums;
-
-    // labels
-    private JLabel firstNameLabel;
-    private JLabel lastNameLabel;
-    private JLabel studentNumLabel;
-    private ArrayList<JLabel> partnerLabels;
-    private ArrayList<JLabel> partnerNumLabels;
-    private JLabel invalid;
-
-    public ArrayList<Student> students;
+    //Labels
+    private JLabel firstNameLabel,lastNameLabel,studentNumLabel,invalid;
+    private ArrayList<JLabel> partnerLabels,partnerNumLabels;
 
     TicketingSystem(ArrayList<Student> students) {
-
         this.students = students;
 
-        ImageIcon icon = new ImageIcon(imgPath);
+        ImageIcon icon = new ImageIcon(imagePath);
         icon.getImage().flush();
+
         JLabel background = new JLabel();
         background.setIcon(icon);
         background.setLayout(new BorderLayout());
@@ -71,25 +65,19 @@ public class TicketingSystem extends JPanel implements ActionListener {
         invalid.setHorizontalAlignment(SwingConstants.LEFT);
         invalid.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-
         fields = new JPanel();
         layout = new GroupLayout(fields);
         fields.setLayout(layout);
 
         buttonRow = new JPanel();
         partnerBtnRow = new JPanel();
-
         column = new JPanel();
+
         column.setLayout(new BoxLayout(column, BoxLayout.Y_AXIS));
+        column.setBorder(new TitledBorder(new LineBorder(Color.BLACK, 5), "Sign Up Form"));
 
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
-
-        /*fields.setBackground(Color.CYAN);
-        buttonRow.setBackground(Color.CYAN);
-        partnerBtnRow.setBackground(Color.CYAN);*/
-        column.setBorder(new TitledBorder(new LineBorder(Color.GREEN, 5), "Sign Up Form"));
-
 
         firstNameLabel = new JLabel("First Name:");
         firstNameField = new JTextField();
@@ -103,7 +91,7 @@ public class TicketingSystem extends JPanel implements ActionListener {
         studentNumField = new JTextField();
         studentNumField.setPreferredSize(new Dimension(300, 25));
 
-        // at least one partner
+        //Minimum 1 partner per student
         partnerFields = new ArrayList<>();
         partnerLabels = new ArrayList<>();
         partnerNums = new ArrayList<>();
@@ -154,7 +142,6 @@ public class TicketingSystem extends JPanel implements ActionListener {
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(studentNumLabel).addComponent(studentNumField));
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(partnerLabels.get(0)).addComponent(partnerFields.get(0)));
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(partnerNumLabels.get(0)).addComponent(partnerNums.get(0)));
-
         layout.setVerticalGroup(vGroup);
 
         column.add(fields);
@@ -164,10 +151,9 @@ public class TicketingSystem extends JPanel implements ActionListener {
 
         this.add(background);
         this.add(column);
-
     }
 
-    void clear() {
+    private void clearPanel() {
         firstNameField.setText("");
         lastNameField.setText("");
         studentNumField.setText("");
@@ -176,10 +162,9 @@ public class TicketingSystem extends JPanel implements ActionListener {
             partnerFields.get(i).setText("");
             partnerNums.get(i).setText("");
         }
-
     }
 
-    void partnerAdded() {
+    private void partnerAdded() {
         JTextField partner = new JTextField();
         partner.setPreferredSize(new Dimension(300, 25));
         partnerFields.add(partner);
@@ -188,7 +173,6 @@ public class TicketingSystem extends JPanel implements ActionListener {
         num.setPreferredSize(new Dimension(300, 25));
         partnerNums.add(num);
 
-        //partnerLabels.add(new JLabel("Partner " + (partnerLabels.size() + 1) + ": "));
         JLabel label = new JLabel("Partner " + (partnerLabels.size() + 1) + " Name: ");
         partnerLabels.add(label);
 
@@ -203,9 +187,9 @@ public class TicketingSystem extends JPanel implements ActionListener {
         /*for (int i = 0; i < partnerFields.size(); i++) {
             pGroupLabel.addComponent(partnerLabels.get(i));
             pGroupField.addComponent(partnerFields.get(i));
-        }*/
+        }
 
-       /*for (int i = 0; i < partnerFields.size(); i++) {
+        for (int i = 0; i < partnerFields.size(); i++) {
             vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(partnerLabels.get(i)).addComponent(partnerFields.get(i)));
         }*/
 
@@ -214,13 +198,12 @@ public class TicketingSystem extends JPanel implements ActionListener {
 
         column.revalidate();
         column.repaint();
-
     }
 
-    void partnerRemoved() {
-        partnerFields.get(partnerFields.size()-1).setVisible(false);
+    private void partnerRemoved() {
+        partnerFields.get(partnerFields.size() - 1).setVisible(false);
         partnerNums.get(partnerNums.size() - 1).setVisible(false);
-        partnerLabels.get(partnerLabels.size()-1).setVisible(false);
+        partnerLabels.get(partnerLabels.size() - 1).setVisible(false);
         partnerNumLabels.get(partnerNumLabels.size() - 1).setVisible(false);
 
         partnerLabels.remove(partnerLabels.size() - 1);
@@ -232,58 +215,62 @@ public class TicketingSystem extends JPanel implements ActionListener {
         column.repaint();
     }
 
-    boolean areFieldsFilled() {
-        if(firstNameField.getText().equals("")) {return false;}
-        else if(lastNameField.getText().equals("")) {return false;}
-        else if(studentNumField.getText().equals("")) {return false;}
+    private boolean areFieldsFilled() {
+        if (firstNameField.getText().equals("")) {
+            return false;
+        } else if (lastNameField.getText().equals("")) {
+            return false;
+        } else if (studentNumField.getText().equals("")) {
+            return false;
+        }
 
         for (int i = 0; i < partnerFields.size(); i++) {
-            if(partnerFields.get(i).getText().equals("")) {
+            if (partnerFields.get(i).getText().equals("")) {
                 return false;
             }
         }
         return true;
     }
 
-    boolean isParseable(JTextField number) {
-        try{
+    private boolean isParseable(JTextField number) {
+        try {
             Integer.parseInt(number.getText().trim());
             return true;
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return false;
         }
     }
 
-
-     boolean submitted() {
+    private boolean isSubmitted() {
         if (!isParseable(studentNumField)) {
             invalid.setText("Student Number not appropriate. Please input properly.");
             invalid.setVisible(true);
-
             return false;
         }
 
-        /*for (int i = 0; i < partnerNums.size(); i++) {
-            if(!isParseable((partnerNums.get(i)))) {
-                System.out.println("Partner Number " + (i+1) + " is not acceptable. Please input properly");
+        for (int i = 0; i < partnerNums.size(); i++) {
+            if (!isParseable((partnerNums.get(i)))) {
+                invalid.setForeground(Color.red);
+                invalid.setText("A Partner Number " + (i + 1) + " is invalid.");
+                invalid.setVisible(true);
                 return false;
+            } else {
+                invalid.setVisible(false);
             }
-        }*/
+        }
 
-            Student user = new Student(firstNameField.getText() + lastNameField.getText(), studentNumField.getText(), createPartnersList());
-            students.add(user);
+        Student user = new Student(firstNameField.getText() + lastNameField.getText(), studentNumField.getText(), createPartnersList());
+        students.add(user);
 
-            for (int i = 0; i < partnerFields.size(); i++) {
-                Student partner = new Student(partnerFields.get(i).getText(), partnerNums.get(i).getText());
-                students.add(partner);
-            }
-
-            return true;
+        for (int i = 0; i < partnerFields.size(); i++) {
+            Student partner = new Student(partnerFields.get(i).getText(), partnerNums.get(i).getText());
+            students.add(partner);
+        }
+        return true;
     }
 
     ArrayList<Student> createPartnersList() {
         ArrayList<Student> partners = new ArrayList<>();
-
         for (int i = 0; i < partnerFields.size(); i++) {
             Student partner = new Student(partnerFields.get(i).getText(), partnerNums.get(i).getText());
             partners.add(partner);
@@ -291,53 +278,46 @@ public class TicketingSystem extends JPanel implements ActionListener {
         return partners;
     }
 
-//    void submit() {
-//        if (areFieldsFilled() && submitted()) {
-//            System.out.println("Submitted");
-//        } else {
-//            invalid.setText("Error: One or more field was not filled.");
-//            invalid.setVisible(true);
-//        }
-//    }
+    private void addStudent() {}
 
-    void addStudent() {}
-    void removeStudent() {}
+    private void removeStudent() {}
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == submit) {
-                if (areFieldsFilled() && submitted()) {
-                    invalid.setText("Profile submitted successfully!");
-                    invalid.setForeground(Color.BLUE);
-                    invalid.setVisible(true);
-
-                    clear();
-
-                    //isVisible = false;
-
-                } else if (!areFieldsFilled()){
-                    System.out.println("All fields are not filled");
-                    invalid.setText("Error: One or more fields are not filled");
-                    invalid.setVisible(true);
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == submit) {
+            if (areFieldsFilled() && isSubmitted()) {
+                invalid.setText("Profile submitted successfully!");
+                invalid.setForeground(Color.GREEN.darker());
+                invalid.setVisible(true);
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
                 }
-            } else if (e.getSource() == clear) {
-                clear();
-            } else if (e.getSource() == cancel) {
-                System.exit(0);
-            } else if (e.getSource() == addPartner) {
-                if (partnerFields.size() < MAX_PARTNER) {
-                    partnerAdded();
-                } else {
-                    invalid.setText("Unable to add more partners");
-                    invalid.setVisible(true);
-                }
-            } else if (e.getSource() == removePartner) {
-                if (partnerFields.size() > 1) {
-                    partnerRemoved();
-                } else {
-                    invalid.setText("You need at least one partner!");
-                    invalid.setVisible(true);
-                }
+                clearPanel();
+            } else if (!areFieldsFilled()) {
+                System.out.println("All fields are not filled");
+                invalid.setText("Error: One or more fields are not filled");
+                invalid.setVisible(true);
+            }
+        } else if (e.getSource() == clear) {
+            clearPanel();
+        } else if (e.getSource() == cancel) {
+            System.exit(0);
+        } else if (e.getSource() == addPartner) {
+            if (partnerFields.size() < MAX_PARTNERS) {
+                partnerAdded();
+            } else {
+                invalid.setText("Unable to add more partners");
+                invalid.setVisible(true);
+            }
+        } else if (e.getSource() == removePartner) {
+            if (partnerFields.size() > 1) {
+                partnerRemoved();
+            } else {
+                invalid.setText("You need at least one partner!");
+                invalid.setVisible(true);
             }
         }
+    }
 }
