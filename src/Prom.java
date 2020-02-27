@@ -31,7 +31,7 @@ public class Prom extends JFrame {
         //Layout
         ticketingPanel = new TicketingSystem(students);
         this.add(ticketingPanel);
-        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize((((int)screen.getWidth())/2), (((int)screen.getHeight()) * 2/3));
         this.setLocationRelativeTo(null);
         this.setVisible(true);
