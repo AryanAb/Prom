@@ -23,6 +23,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
+import java.util.List;
 
 public class TicketingSystem extends JPanel implements ActionListener {
 
@@ -42,11 +44,11 @@ public class TicketingSystem extends JPanel implements ActionListener {
     private JButton submit,clear,cancel,addPartner,removePartner;
 
     //Text Fields
-    private JTextField firstNameField,lastNameField,studentNumField;
+    private JTextField firstNameField,lastNameField, restrictionsField, studentNumField;
     private ArrayList<JTextField> partnerFields,partnerNums;
 
     //Labels
-    private JLabel firstNameLabel,lastNameLabel,studentNumLabel,invalid;
+    private JLabel firstNameLabel,lastNameLabel,restrictions, studentNumLabel,invalid;
     private ArrayList<JLabel> partnerLabels,partnerNumLabels;
 
     TicketingSystem(ArrayList<Student> students) {
@@ -86,6 +88,10 @@ public class TicketingSystem extends JPanel implements ActionListener {
         lastNameLabel = new JLabel("Last Name:");
         lastNameField = new JTextField();
         lastNameField.setPreferredSize(new Dimension(300, 25));
+
+        restrictions = new JLabel("Accommodations:");
+        restrictionsField = new JTextField();
+        restrictionsField.setPreferredSize(new Dimension(300, 25));
 
         studentNumLabel = new JLabel("Student Num:");
         studentNumField = new JTextField();
@@ -131,8 +137,8 @@ public class TicketingSystem extends JPanel implements ActionListener {
         pGroupField = layout.createParallelGroup();
 
         hGroup = layout.createSequentialGroup();
-        hGroup.addGroup(pGroupLabel.addComponent(firstNameLabel).addComponent(lastNameLabel).addComponent(studentNumLabel).addComponent(partnerLabels.get(0)).addComponent(partnerNumLabels.get(0)));
-        hGroup.addGroup(pGroupField.addComponent(firstNameField).addComponent(lastNameField).addComponent(studentNumField).addComponent(partnerFields.get(0)).addComponent(partnerNums.get(0)));
+        hGroup.addGroup(pGroupLabel.addComponent(firstNameLabel).addComponent(lastNameLabel).addComponent(studentNumLabel).addComponent(restrictions).addComponent(partnerLabels.get(0)).addComponent(partnerNumLabels.get(0)));
+        hGroup.addGroup(pGroupField.addComponent(firstNameField).addComponent(lastNameField).addComponent(studentNumField).addComponent(restrictionsField).addComponent(partnerFields.get(0)).addComponent(partnerNums.get(0)));
 
         layout.setHorizontalGroup(hGroup);
 
@@ -140,6 +146,7 @@ public class TicketingSystem extends JPanel implements ActionListener {
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(firstNameLabel).addComponent(firstNameField));
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(lastNameLabel).addComponent(lastNameField));
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(studentNumLabel).addComponent(studentNumField));
+        vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(restrictions).addComponent(restrictionsField));
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(partnerLabels.get(0)).addComponent(partnerFields.get(0)));
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(partnerNumLabels.get(0)).addComponent(partnerNums.get(0)));
         layout.setVerticalGroup(vGroup);
@@ -157,6 +164,7 @@ public class TicketingSystem extends JPanel implements ActionListener {
         firstNameField.setText("");
         lastNameField.setText("");
         studentNumField.setText("");
+        restrictionsField.setText("");
 
         for (int i = 0; i < partnerFields.size(); i++) {
             partnerFields.get(i).setText("");
@@ -259,7 +267,12 @@ public class TicketingSystem extends JPanel implements ActionListener {
             }
         }
 
-        Student user = new Student(firstNameField.getText() + lastNameField.getText(), studentNumField.getText(), createPartnersList());
+        String[] accomm = new String[restrictionsField.getText().split(" ").length];
+        ArrayList<String> rest = new ArrayList<>();
+        for (String c: accomm) {
+            rest.add(c);
+        }
+        Student user = new Student(firstNameField.getText() + lastNameField.getText(), studentNumField.getText(), createPartnersList(), rest);
         students.add(user);
 
         for (int i = 0; i < partnerFields.size(); i++) {

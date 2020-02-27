@@ -5,12 +5,14 @@ public class Student {
     private String name;
     private String  id;
     private ArrayList<Student> partners;
+    private ArrayList<String> restrictions;
     private boolean paid;
 
-    Student(String name, String  id, ArrayList<Student> partners) {
+    Student(String name, String  id, ArrayList<Student> partners, ArrayList<String> restrictions) {
         this.name = name;
         this.id = id;
         this.partners = partners;
+        this.restrictions = restrictions;
     }
 
     Student(String name, String id) {
