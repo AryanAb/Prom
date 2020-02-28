@@ -1,8 +1,8 @@
 /*Class Name: TicketingSystem
- * Version: 1.0
- * Authors: Nischay Uppal & Aryan Abed
- * Date: February 25,2018
- * Description: Running Core Ticketing System for user
+ * @version: 1.0
+ * @author: Nischay Uppal & Aryan Abed
+ * @date: February 25,2018
+ * @description: Running Core Ticketing System for user
  * */
 
 import javax.swing.JPanel;
@@ -23,13 +23,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-import java.util.Arrays;
-import java.util.List;
 
 public class TicketingSystem extends JPanel implements ActionListener {
-
+    //Max Partners
     private final int MAX_PARTNERS = 7;
+
+    //Image
     private final String imagePath = "Richmond_Hill_HS_COA.jpg";
+
+    //Master List
     private ArrayList<Student> students;
 
     //layout
@@ -54,19 +56,23 @@ public class TicketingSystem extends JPanel implements ActionListener {
     TicketingSystem(ArrayList<Student> students) {
         this.students = students;
 
+        //Init Images
         ImageIcon icon = new ImageIcon(imagePath);
         icon.getImage().flush();
 
+        //Background
         JLabel background = new JLabel();
         background.setIcon(icon);
         background.setLayout(new BorderLayout());
 
+        //Warning Label
         invalid = new JLabel();
         invalid.setForeground(Color.red);
         invalid.setVisible(false);
         invalid.setHorizontalAlignment(SwingConstants.LEFT);
         invalid.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        //Formatting
         fields = new JPanel();
         layout = new GroupLayout(fields);
         fields.setLayout(layout);
@@ -160,19 +166,32 @@ public class TicketingSystem extends JPanel implements ActionListener {
         this.add(column);
     }
 
+    /**
+    clearPanel()
+    This method clears all user input
+    This method is a void
+     */
     private void clearPanel() {
+        //Clears JTextFields
         firstNameField.setText("");
         lastNameField.setText("");
         studentNumField.setText("");
         restrictionsField.setText("");
 
+        //Clears all partner textfields
         for (int i = 0; i < partnerFields.size(); i++) {
             partnerFields.get(i).setText("");
             partnerNums.get(i).setText("");
         }
     }
 
+    /**
+     partnerAdded()
+     This method adds a partner name and number text field to the panel
+     This method is a void
+     */
     private void partnerAdded() {
+        //Adds JTextFields needed for Partner
         JTextField partner = new JTextField();
         partner.setPreferredSize(new Dimension(300, 25));
         partnerFields.add(partner);
@@ -187,43 +206,50 @@ public class TicketingSystem extends JPanel implements ActionListener {
         JLabel labelNum = new JLabel("Partner " + (partnerNumLabels.size() + 1) + " Num: ");
         partnerNumLabels.add(labelNum);
 
+        //Grouping
         pGroupLabel.addComponent(label);
         pGroupField.addComponent(partner);
         pGroupLabel.addComponent(labelNum);
         pGroupField.addComponent(num);
 
-        /*for (int i = 0; i < partnerFields.size(); i++) {
-            pGroupLabel.addComponent(partnerLabels.get(i));
-            pGroupField.addComponent(partnerFields.get(i));
-        }
-
-        for (int i = 0; i < partnerFields.size(); i++) {
-            vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(partnerLabels.get(i)).addComponent(partnerFields.get(i)));
-        }*/
-
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(partnerLabels.get(partnerLabels.size() - 1)).addComponent(partnerFields.get(partnerFields.size() - 1)));
         vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(partnerNumLabels.get(partnerNumLabels.size() - 1)).addComponent(partnerNums.get(partnerNums.size() - 1)));
 
+        //Update
         column.revalidate();
         column.repaint();
     }
 
+    /**
+     partnerRemoved()
+     This method removes a partner name and number text field to the panel
+     This method is a void
+     */
     private void partnerRemoved() {
+        //Removes JTextField and Labels of last partner
         partnerFields.get(partnerFields.size() - 1).setVisible(false);
         partnerNums.get(partnerNums.size() - 1).setVisible(false);
         partnerLabels.get(partnerLabels.size() - 1).setVisible(false);
         partnerNumLabels.get(partnerNumLabels.size() - 1).setVisible(false);
 
+        //Updates ArrayList sizes
         partnerLabels.remove(partnerLabels.size() - 1);
         partnerFields.remove(partnerFields.size() - 1);
         partnerNums.remove(partnerNums.size() - 1);
         partnerNumLabels.remove(partnerNumLabels.size() - 1);
 
+        //Update
         column.revalidate();
         column.repaint();
     }
 
+    /**
+     areFieldsFilled()
+     This method checks if all fields are filled
+     @return Boolean, true if All fields are filled, false if all fields are filled
+     */
     private boolean areFieldsFilled() {
+        //Checks if Student fields are empty. Returns false if they are
         if (firstNameField.getText().equals("")) {
             return false;
         } else if (lastNameField.getText().equals("")) {
@@ -232,14 +258,22 @@ public class TicketingSystem extends JPanel implements ActionListener {
             return false;
         }
 
+        //Checks if partner fields are empty. returns false if they are
         for (int i = 0; i < partnerFields.size(); i++) {
             if (partnerFields.get(i).getText().equals("")) {
                 return false;
             }
         }
+        //Return true if all fields filled
         return true;
     }
 
+    /**
+     isParseable()
+     This method checks if a text field contains only integers
+     @param JTextField, textfield to analyze
+     @return Boolean, true if text field only contains integers, false if it does not
+     */
     private boolean isParseable(JTextField number) {
         try {
             Integer.parseInt(number.getText().trim());
@@ -249,32 +283,44 @@ public class TicketingSystem extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     isSubmitted()
+     This method checks if the student's profile can be successfully submitted
+     @return Boolean, true if profile successfully submitted, false if it cannot
+     */
     private boolean isSubmitted() {
+        //Checks if Student Number is parseable
         if (!isParseable(studentNumField)) {
+            //Update and illuminate flag
             invalid.setText("Student Number not appropriate. Please input properly.");
             invalid.setVisible(true);
             return false;
         }
-
+        //Checks if each Partner Number is parseable
         for (int i = 0; i < partnerNums.size(); i++) {
             if (!isParseable((partnerNums.get(i)))) {
+                //Update and illuminate flag
                 invalid.setForeground(Color.red);
                 invalid.setText("A Partner Number " + (i + 1) + " is invalid.");
                 invalid.setVisible(true);
                 return false;
             } else {
+                //Eliminate FLag
                 invalid.setVisible(false);
             }
         }
 
+        //Convert String[] of accommodations to ArrayList<String>s
         String[] accomm = new String[restrictionsField.getText().split(" ").length];
         ArrayList<String> rest = new ArrayList<>();
         for (String c: accomm) {
             rest.add(c);
         }
+        //Add user and data to Student object and add student to master list
         Student user = new Student(firstNameField.getText() + lastNameField.getText(), studentNumField.getText(), createPartnersList(), rest);
         students.add(user);
 
+        //Add partners to students master list declared in Prom classs
         for (int i = 0; i < partnerFields.size(); i++) {
             Student partner = new Student(partnerFields.get(i).getText(), partnerNums.get(i).getText());
             students.add(partner);
@@ -282,8 +328,14 @@ public class TicketingSystem extends JPanel implements ActionListener {
         return true;
     }
 
+    /**
+     createPartnerList()
+     This method creates an arrayList of partners
+     @return ArrayList<Student> returns arrayList of partners which student inputted
+     */
     ArrayList<Student> createPartnersList() {
         ArrayList<Student> partners = new ArrayList<>();
+        //Create new Student for Each partner and add partner to partners.
         for (int i = 0; i < partnerFields.size(); i++) {
             Student partner = new Student(partnerFields.get(i).getText(), partnerNums.get(i).getText());
             partners.add(partner);
@@ -291,12 +343,24 @@ public class TicketingSystem extends JPanel implements ActionListener {
         return partners;
     }
 
+    /**
+     addStudent()
+     */
     private void addStudent() {}
 
+    /**
+     removeStudent()
+     */
     private void removeStudent() {}
 
+    /**
+     actionPerformed()
+     Handles all inputs, flags, and buttons
+     @param ActionEvent e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
+        //If Submit button pressed, verify validity of profile being submitted
         if (e.getSource() == submit) {
             if (areFieldsFilled() && isSubmitted()) {
                 invalid.setText("Profile submitted successfully!");
@@ -307,17 +371,22 @@ public class TicketingSystem extends JPanel implements ActionListener {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
+                //Clear Panel when sucessfully submitted for next tudent
                 clearPanel();
             } else if (!areFieldsFilled()) {
+                //Not all field filled, present flag
                 System.out.println("All fields are not filled");
                 invalid.setText("Error: One or more fields are not filled");
                 invalid.setVisible(true);
             }
         } else if (e.getSource() == clear) {
+            //Clear the panel
             clearPanel();
         } else if (e.getSource() == cancel) {
+            //Exit the program
             System.exit(0);
         } else if (e.getSource() == addPartner) {
+            //Add additional partner if student does not reach max partners allowed
             if (partnerFields.size() < MAX_PARTNERS) {
                 partnerAdded();
             } else {
@@ -325,6 +394,7 @@ public class TicketingSystem extends JPanel implements ActionListener {
                 invalid.setVisible(true);
             }
         } else if (e.getSource() == removePartner) {
+            //Removes partner fields
             if (partnerFields.size() > 1) {
                 partnerRemoved();
             } else {

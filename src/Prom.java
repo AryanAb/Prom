@@ -1,8 +1,8 @@
 /*Class Name: Main
- * Version: 1.0
- * Authors: Nischay Uppal & Aryan Abed
- * Date: February 25,2018
- * Description: Loads and contains Ticketing System
+ * @version: 1.0
+ * @authors: Nischay Uppal & Aryan Abed
+ * @date: February 25,2018
+ * @description: Loads and contains Ticketing System
  */
 
 //TODO: CHANGE THE FONTS, Font's aren't loading up
@@ -15,22 +15,29 @@ import java.awt.Color;
 import javax.swing.JScrollPane;
 
 public class Prom extends JFrame {
+
+    //TicketingSystem object
     private TicketingSystem ticketingPanel;
+
+    //Master List of Students
     private ArrayList<Student> students;
+
+    //Scroll Bar increments
     private final int SCROLL_UNIT = 30;
-    //private ArrayList<Table> tables;
+
+    //Background Color
     Color darkGreen = new Color(0,128,0);
 
     Prom() {
         super("PROM 2021 SIGN UP");
-        students = new ArrayList<>();
-        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        Font font1 = new Font("Crystal",Font.BOLD,12);
-        this.setFont(font1);
 
-        //Layout
+        //Init
+        students = new ArrayList<>();
         ticketingPanel = new TicketingSystem(students);
         this.add(ticketingPanel);
+
+        //Layout
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize((((int)screen.getWidth())/2), (((int)screen.getHeight()) * 2/3));
         this.setLocationRelativeTo(null);
