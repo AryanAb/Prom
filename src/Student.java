@@ -1,18 +1,18 @@
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Student {
 
     private String name;
     private String  id;
     private ArrayList<Student> partners;
-    private ArrayList<String> restrictions;
+    private ArrayList<String> accommodations;
     private boolean paid;
 
-    Student(String name, String  id, ArrayList<Student> partners, ArrayList<String> restrictions) {
+    Student(String name, String  id, ArrayList<Student> partners) {
         this.name = name;
         this.id = id;
         this.partners = partners;
-        this.restrictions = restrictions;
     }
 
     Student(String name, String id) {
@@ -44,4 +44,16 @@ public class Student {
         this.paid = hasPaid;
     }
 
+    public void setAccommodations (ArrayList<String> accommodations) {
+        this.accommodations = accommodations;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return  Objects.equals(name, student.name) &&
+                Objects.equals(id, student.id);
+    }
 }

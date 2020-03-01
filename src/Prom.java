@@ -28,6 +28,10 @@ public class Prom extends JFrame {
     //Background Color
     Color darkGreen = new Color(0,128,0);
 
+    public ArrayList<Student> getStudents() {
+        return this.students;
+    }
+
     Prom() {
         super("PROM 2021 SIGN UP");
 
@@ -41,7 +45,6 @@ public class Prom extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize((((int)screen.getWidth())/2), (((int)screen.getHeight()) * 2/3));
         this.setLocationRelativeTo(null);
-        this.setVisible(true);
         ticketingPanel.setBackground(darkGreen);
 
         //Scroll Bar
@@ -49,5 +52,6 @@ public class Prom extends JFrame {
         scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_UNIT);
         scrollPane.getVerticalScrollBar().setBackground(Color.BLACK);
         this.add(scrollPane);
+        this.setVisible(true);
     }
 }

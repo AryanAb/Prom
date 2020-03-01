@@ -130,11 +130,11 @@ public class TicketingSystem extends JPanel implements ActionListener {
         submit.addActionListener(this);
         buttonRow.add(submit);
 
-        clear = new JButton("Clear");
+        clear = new JButton("Clear All");
         clear.addActionListener(this);
         buttonRow.add(clear);
 
-        cancel = new JButton("Cancel & Exit");
+        cancel = new JButton("Exit");
         cancel.addActionListener(this);
         buttonRow.add(cancel);
 
@@ -271,7 +271,7 @@ public class TicketingSystem extends JPanel implements ActionListener {
     /**
      isParseable()
      This method checks if a text field contains only integers
-     @param JTextField, textfield to analyze
+     @param //JTextField, textfield to analyze
      @return Boolean, true if text field only contains integers, false if it does not
      */
     private boolean isParseable(JTextField number) {
@@ -316,14 +316,28 @@ public class TicketingSystem extends JPanel implements ActionListener {
         for (String c: accomm) {
             rest.add(c);
         }
-        //Add user and data to Student object and add student to master list
-        Student user = new Student(firstNameField.getText() + lastNameField.getText(), studentNumField.getText(), createPartnersList(), rest);
-        students.add(user);
 
-        //Add partners to students master list declared in Prom classs
+
+
+        //Add user and data to Student object and add student to master list
+        Student user = new Student(firstNameField.getText() + " " + lastNameField.getText(), studentNumField.getText(), createPartnersList());
+        user.setPaid(true);
+        user.setAccommodations(rest);
+
+        if (students.contains(user)) {
+            students.get(students.indexOf(user)).setPartners(createPartnersList());
+            students.get(students.indexOf(user)).setAccommodations(rest);
+            students.get(students.indexOf(user)).setPaid(true);
+        } else {
+            students.add(user);
+        }
+
+        //Add partners to students master list declared in Prom class
         for (int i = 0; i < partnerFields.size(); i++) {
             Student partner = new Student(partnerFields.get(i).getText(), partnerNums.get(i).getText());
-            students.add(partner);
+            if (!students.contains(partner)) {
+                students.add(partner);
+            }
         }
         return true;
     }
@@ -356,7 +370,7 @@ public class TicketingSystem extends JPanel implements ActionListener {
     /**
      actionPerformed()
      Handles all inputs, flags, and buttons
-     @param ActionEvent e
+     @param //ActionEvent e
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -371,7 +385,7 @@ public class TicketingSystem extends JPanel implements ActionListener {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
-                //Clear Panel when sucessfully submitted for next tudent
+                //Clear Panel when successfully submitted for next student
                 clearPanel();
             } else if (!areFieldsFilled()) {
                 //Not all field filled, present flag
@@ -384,7 +398,7 @@ public class TicketingSystem extends JPanel implements ActionListener {
             clearPanel();
         } else if (e.getSource() == cancel) {
             //Exit the program
-            System.exit(0);
+            this.setVisible(false);
         } else if (e.getSource() == addPartner) {
             //Add additional partner if student does not reach max partners allowed
             if (partnerFields.size() < MAX_PARTNERS) {
