@@ -17,7 +17,9 @@ import javax.swing.JScrollPane;
 public class Prom extends JFrame {
 
     //TicketingSystem object
+    private Menu menu;
     private TicketingSystem ticketingPanel;
+    private FloorPlanSystem floorPanel;
 
     //Master List of Students
     private ArrayList<Student> students;
@@ -37,8 +39,11 @@ public class Prom extends JFrame {
 
         //Init
         students = new ArrayList<>();
-        ticketingPanel = new TicketingSystem(students);
-        this.add(ticketingPanel);
+        ticketingPanel = new TicketingSystem(this);
+        floorPanel = new FloorPlanSystem(students);
+        menu = new Menu(this);
+
+        this.add(menu);
 
         //Layout
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -48,10 +53,23 @@ public class Prom extends JFrame {
         ticketingPanel.setBackground(darkGreen);
 
         //Scroll Bar
-        JScrollPane scrollPane = new JScrollPane(ticketingPanel);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_UNIT);
-        scrollPane.getVerticalScrollBar().setBackground(Color.BLACK);
-        this.add(scrollPane);
+        //JScrollPane scrollPane = new JScrollPane(ticketingPanel);
+        //scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_UNIT);
+        //scrollPane.getVerticalScrollBar().setBackground(Color.BLACK);
+        //this.add(scrollPane);
         this.setVisible(true);
     }
+
+    public TicketingSystem getTicketingPanel() {
+        return ticketingPanel;
+    }
+
+    public FloorPlanSystem getFloorPanel() {
+        return floorPanel;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
 }

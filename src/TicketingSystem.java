@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class TicketingSystem extends JPanel implements ActionListener {
+
+    private Prom parent;
+
     //Max Partners
     private final int MAX_PARTNERS = 7;
 
@@ -53,8 +56,10 @@ public class TicketingSystem extends JPanel implements ActionListener {
     private JLabel firstNameLabel,lastNameLabel,restrictions, studentNumLabel,invalid;
     private ArrayList<JLabel> partnerLabels,partnerNumLabels;
 
-    TicketingSystem(ArrayList<Student> students) {
-        this.students = students;
+    TicketingSystem(Prom parent) {
+
+        this.parent = parent;
+        this.students = parent.getStudents();
 
         //Init Images
         ImageIcon icon = new ImageIcon(imagePath);
@@ -310,23 +315,27 @@ public class TicketingSystem extends JPanel implements ActionListener {
             }
         }
 
-        //Convert String[] of accommodations to ArrayList<String>s
-        String[] accomm = new String[restrictionsField.getText().split(" ").length];
-        ArrayList<String> rest = new ArrayList<>();
-        for (String c: accomm) {
-            rest.add(c);
-        }
 
 
 
         //Add user and data to Student object and add student to master list
         Student user = new Student(firstNameField.getText() + " " + lastNameField.getText(), studentNumField.getText(), createPartnersList());
         user.setPaid(true);
-        user.setAccommodations(rest);
+
+        //Convert String[] of accommodations to ArrayList<String>s
+        String[] accomm = new String[restrictionsField.getText().split(", ").length];
+
+
 
         if (students.contains(user)) {
             students.get(students.indexOf(user)).setPartners(createPartnersList());
-            students.get(students.indexOf(user)).setAccommodations(rest);
+            if (accomm.equals("")) {
+                ArrayList<String> rest = new ArrayList<>();
+                for (String c : accomm) {
+                    rest.add(c);
+                }
+                students.get(students.indexOf(user)).setAccommodations(rest);
+            }
             students.get(students.indexOf(user)).setPaid(true);
         } else {
             students.add(user);
@@ -397,8 +406,10 @@ public class TicketingSystem extends JPanel implements ActionListener {
             //Clear the panel
             clearPanel();
         } else if (e.getSource() == cancel) {
-            //Exit the program
-            this.setVisible(false);
+            parent.remove(this);
+            parent.add(parent.getMenu());
+            parent.revalidate();
+            parent.repaint();
         } else if (e.getSource() == addPartner) {
             //Add additional partner if student does not reach max partners allowed
             if (partnerFields.size() < MAX_PARTNERS) {
