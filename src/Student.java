@@ -18,6 +18,7 @@ public class Student {
     Student(String name, String id) {
         this.name = name;
         this.id = id;
+        partners = new ArrayList<>();
     }
 
     public String getName() {
@@ -46,6 +47,10 @@ public class Student {
 
     public void setAccommodations (ArrayList<String> accommodations) {
         this.accommodations = accommodations;
+    }
+
+    public ArrayList<String> getAccommodations() {
+        return accommodations;
     }
 
     @Override

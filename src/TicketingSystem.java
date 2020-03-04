@@ -315,21 +315,16 @@ public class TicketingSystem extends JPanel implements ActionListener {
             }
         }
 
-
-
-
         //Add user and data to Student object and add student to master list
         Student user = new Student(firstNameField.getText() + " " + lastNameField.getText(), studentNumField.getText(), createPartnersList());
         user.setPaid(true);
 
         //Convert String[] of accommodations to ArrayList<String>s
-        String[] accomm = new String[restrictionsField.getText().split(", ").length];
-
-
+        String[] accomm = restrictionsField.getText().split(", ");
 
         if (students.contains(user)) {
             students.get(students.indexOf(user)).setPartners(createPartnersList());
-            if (accomm.equals("")) {
+            if (accomm.length != 0) {
                 ArrayList<String> rest = new ArrayList<>();
                 for (String c : accomm) {
                     rest.add(c);
@@ -348,6 +343,7 @@ public class TicketingSystem extends JPanel implements ActionListener {
                 students.add(partner);
             }
         }
+
         return true;
     }
 
@@ -362,6 +358,7 @@ public class TicketingSystem extends JPanel implements ActionListener {
         for (int i = 0; i < partnerFields.size(); i++) {
             Student partner = new Student(partnerFields.get(i).getText(), partnerNums.get(i).getText());
             partners.add(partner);
+            System.out.println("added");
         }
         return partners;
     }
