@@ -325,8 +325,10 @@ public class TicketingSystem extends JPanel implements ActionListener {
         if (students.contains(user)) {
             students.get(students.indexOf(user)).setPartners(createPartnersList());
             if (accomm.length != 0) {
+                System.out.println("Hello?");
                 ArrayList<String> rest = new ArrayList<>();
                 for (String c : accomm) {
+                    System.out.println(c);
                     rest.add(c);
                 }
                 students.get(students.indexOf(user)).setAccommodations(rest);
@@ -334,6 +336,15 @@ public class TicketingSystem extends JPanel implements ActionListener {
             students.get(students.indexOf(user)).setPaid(true);
         } else {
             students.add(user);
+            if (accomm.length != 0) {
+                System.out.println("Hello?");
+                ArrayList<String> rest = new ArrayList<>();
+                for (String c : accomm) {
+                    System.out.println(c);
+                    rest.add(c);
+                }
+                students.get(students.indexOf(user)).setAccommodations(rest);
+            }
         }
 
         //Add partners to students master list declared in Prom class
@@ -358,7 +369,6 @@ public class TicketingSystem extends JPanel implements ActionListener {
         for (int i = 0; i < partnerFields.size(); i++) {
             Student partner = new Student(partnerFields.get(i).getText(), partnerNums.get(i).getText());
             partners.add(partner);
-            System.out.println("added");
         }
         return partners;
     }

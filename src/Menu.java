@@ -28,10 +28,11 @@ public class Menu extends JPanel implements ActionListener {
             parent.revalidate();
             parent.repaint();
         } else if (e.getSource() == floorPanelButton) {
-            parent.getStudents().size();
+            //parent.getStudents().size();
             parent.getFloorPanel().makeVisible();
             parent.add(parent.getFloorPanel());
-            this.setVisible(false);
+            parent.remove(this);
+            //this.setVisible(false);
             parent.revalidate();
             parent.repaint();
         }

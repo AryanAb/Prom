@@ -40,7 +40,7 @@ public class Prom extends JFrame {
         //Init
         students = new ArrayList<>();
         ticketingPanel = new TicketingSystem(this);
-        floorPanel = new FloorPlanSystem(students);
+        floorPanel = new FloorPlanSystem(this);
         menu = new Menu(this);
 
         this.add(menu);

@@ -64,14 +64,12 @@ public class Table {
                 int sY = (int) (y - (tableR + sR) * Math.cos(theta));
 
                 Utility.drawCenteredCircle(g, sX, sY, sR, c);
-                Utility.drawCenteredTextBox(g, sX, sY - sR - 3, students.get(i).getName(), Color.CYAN);
-                /*if (students.get(i).getAccommodations() != null) {
-                    if (students.get(i).getAccommodations().size() > 0) {
-                        Utility.drawCenteredTextBox(g, sX, sY - sR - 3, students.get(i).getName(), Color.CYAN);
-                    } else {
-                        Utility.drawCenteredTextBox(g, sX, sY - sR - 3, students.get(i).getName(), Color.WHITE);
-                    }
-                }*/
+                //System.out.println("Size: " + students.get(i).getAccommodations().size());
+                if (students.get(i).getAccommodations().size() > 0) {
+                    Utility.drawCenteredTextBox(g, sX, sY - sR - 3, students.get(i).getName(), Color.CYAN);
+                } else {
+                    Utility.drawCenteredTextBox(g, sX, sY - sR - 3, students.get(i).getName(), Color.WHITE);
+                }
             }
         }
 

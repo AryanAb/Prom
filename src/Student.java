@@ -13,12 +13,14 @@ public class Student {
         this.name = name;
         this.id = id;
         this.partners = partners;
+        accommodations = new ArrayList<String>();
     }
 
     Student(String name, String id) {
         this.name = name;
         this.id = id;
         partners = new ArrayList<>();
+        accommodations = new ArrayList<String>();
     }
 
     public String getName() {
