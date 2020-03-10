@@ -53,7 +53,7 @@ public class TicketingSystem extends JPanel implements ActionListener {
     private ArrayList<JTextField> partnerFields,partnerNums;
 
     //Labels
-    private JLabel firstNameLabel,lastNameLabel,restrictions, studentNumLabel,invalid;
+    private JLabel firstNameLabel,lastNameLabel,restrictions, studentNumLabel,invalid,instructions;
     private ArrayList<JLabel> partnerLabels,partnerNumLabels;
 
     TicketingSystem(Prom parent) {
@@ -76,6 +76,15 @@ public class TicketingSystem extends JPanel implements ActionListener {
         invalid.setVisible(false);
         invalid.setHorizontalAlignment(SwingConstants.LEFT);
         invalid.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        //Instructional Label
+        instructions = new JLabel();
+        instructions.setForeground(Color.red);
+        instructions.setVisible(true);
+        instructions.setHorizontalAlignment(SwingConstants.LEFT);
+        instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
+        instructions.setText("Accommodations must be separated with a comma & " +
+                "Partner Name must include their first and last name.");
 
         //Formatting
         fields = new JPanel();
@@ -166,6 +175,7 @@ public class TicketingSystem extends JPanel implements ActionListener {
         column.add(partnerBtnRow);
         column.add(buttonRow);
         column.add(invalid);
+        column.add(instructions);
 
         this.add(background);
         this.add(column);

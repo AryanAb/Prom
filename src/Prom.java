@@ -5,8 +5,7 @@
  * @description: Loads and contains Ticketing System
  */
 
-//TODO: CHANGE THE FONTS, Font's aren't loading up
-import javax.swing.*;
+import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -30,10 +29,6 @@ public class Prom extends JFrame {
     //Background Color
     Color darkGreen = new Color(0,128,0);
 
-    public ArrayList<Student> getStudents() {
-        return this.students;
-    }
-
     Prom() {
         super("PROM 2021 SIGN UP");
 
@@ -48,28 +43,52 @@ public class Prom extends JFrame {
         //Layout
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize((((int)screen.getWidth())/2), (((int)screen.getHeight()) * 2/3));
+        this.setSize(((int)screen.getWidth()), ((int)screen.getHeight()));
+        //this.setSize
         this.setLocationRelativeTo(null);
         ticketingPanel.setBackground(darkGreen);
 
         //Scroll Bar
-        //JScrollPane scrollPane = new JScrollPane(ticketingPanel);
-        //scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_UNIT);
-        //scrollPane.getVerticalScrollBar().setBackground(Color.BLACK);
-        //this.add(scrollPane);
+//        JScrollPane scrollPane = new JScrollPane(ticketingPanel);
+//        scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_UNIT);
+//        scrollPane.getVerticalScrollBar().setBackground(Color.BLACK);
+//        this.add(scrollPane);
         this.setVisible(true);
     }
 
+    /**
+     getTicketingPanel()
+     This method gets Ticketing Panel System
+     @return TicketingSystem
+     */
     public TicketingSystem getTicketingPanel() {
         return ticketingPanel;
     }
 
+    /**
+     getFloorPanel()
+     This method gets Floor Panel System
+     @return FloorPlanSystem
+     */
     public FloorPlanSystem getFloorPanel() {
         return floorPanel;
     }
 
+    /**
+     getMenu()
+     This method gets the menu of the Prom application
+     @return Menu
+     */
     public Menu getMenu() {
         return menu;
     }
 
+    /**
+     getStudents()
+     This method gets the masterlist of students
+     @return ArrayList<Student>
+     */
+    public ArrayList<Student> getStudents() {
+        return this.students;
+    }
 }

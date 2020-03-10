@@ -19,6 +19,8 @@ import java.beans.PropertyChangeListener;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import javax.swing.text.Utilities;
+import javax.swing.SwingUtilities;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;

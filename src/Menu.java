@@ -1,14 +1,23 @@
-import javax.swing.*;
+/*Class Name: Main
+ * @version: 1.0
+ * @author: Nischay Uppal & Aryan Abed
+ * @date: February 25,2018
+ * @description: Initializing Prom Class
+ * */
+import javax.swing.JPanel;
+import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Menu extends JPanel implements ActionListener {
 
+    //Menu Buttons
     private JButton ticketingPanelButton, floorPanelButton;
+
     private Prom parent;
 
+    //Initializer
     Menu(Prom parent) {
-
         this.parent = parent;
 
         ticketingPanelButton = new JButton("Ticketing System");
@@ -20,14 +29,17 @@ public class Menu extends JPanel implements ActionListener {
         this.add(floorPanelButton);
     }
 
+    //ActionPerformed interface
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ticketingPanelButton) {
+            //Paint ticketing Panel
             parent.add(parent.getTicketingPanel());
             parent.remove(this);
             parent.revalidate();
             parent.repaint();
         } else if (e.getSource() == floorPanelButton) {
+            //Paint floor Panel
             //parent.getStudents().size();
             parent.getFloorPanel().makeVisible();
             parent.add(parent.getFloorPanel());
@@ -37,5 +49,4 @@ public class Menu extends JPanel implements ActionListener {
             parent.repaint();
         }
     }
-
 }

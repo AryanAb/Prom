@@ -1,7 +1,7 @@
 /*
  * Table.java
  * Version 1
- * @author Andy Li
+ * @author Aryan Abed & Nischay Uppal
  * March 1, 2020
  * Creates a student object
  */
@@ -20,7 +20,7 @@ public class Table {
     private ArrayList<Student> students;
     private int x;
     private int y;
-    private int r;
+    private int radius;
 
     //Constructors
 
@@ -36,21 +36,42 @@ public class Table {
 
     //Methods
 
+    /**
+     getRadius()
+     This method gets radius of table
+     @return Integer, radius
+     */
     public int getRadius() {
-        return r;
+        return radius;
     }
 
-    public void setRadius(int r) {
-        this.r = r;
+    /**
+     setRadius()
+     This method sets radius of table
+     @param //int newRadius
+     @return void
+     */
+    public void setRadius(int newRadius) {
+        this.radius = newRadius;
     }
 
+    /**
+     getNumSeated()
+     This method gets number of students
+     @return Integer, number of students
+     */
     public int getNumSeated() {
         return students.size();
     }
 
+    /**
+     draw()
+     This method draws the Table and Students
+     @return void
+     */
     public void draw (Graphics g, Color c ) {
-        int tableR = (int) (r * 0.8);
-        int sR = (r - tableR) / 2;
+        int tableR = (int) (radius * 0.8);
+        int sR = (radius - tableR) / 2;
 
         double angle = 2 * Math.PI / this.getNumSeated();
 
@@ -72,7 +93,6 @@ public class Table {
                 }
             }
         }
-
     }
 
 
