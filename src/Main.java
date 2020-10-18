@@ -8,7 +8,7 @@
 
 public class Main {
     public static void main (String[] args) {
-        //Init Prom Object
+        //Init Prom Objectd
         CalendarFrame f = new CalendarFrame();
     }
 }
