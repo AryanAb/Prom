@@ -5,9 +5,10 @@
 * @description: Initializing Prom Object
 * */
 
+
 public class Main {
     public static void main (String[] args) {
         //Init Prom Object
-        Prom f = new Prom();
+        CalendarFrame f = new CalendarFrame();
     }
 }
